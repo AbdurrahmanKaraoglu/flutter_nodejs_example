@@ -16,6 +16,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     userController = Get.find<UserController>(tag: "Main");
+
+    debugPrint('serController!.userName.value : ${userController!.userName.value}');
     super.initState();
   }
 
@@ -24,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
+        leading: const SizedBox(),
       ),
       // Ekranın ortasında 2 tane conteiner dan yapılmış buton olacak ve bu butonlar yeni kayıt ekle ve kullanıcıları listeleme butonları olacak
       body: Center(

@@ -15,6 +15,8 @@ class UserController extends GetxController {
 
   RxList<UserModel> userList = RxList<UserModel>();
 
+  RxString userName = ''.obs;
+
   Future<void> getUserList(String searchText) async {
     try {
       setLoading(true);

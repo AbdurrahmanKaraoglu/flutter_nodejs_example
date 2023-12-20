@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nodejs_example/api/controller/user_controller.dart';
-import 'package:flutter_nodejs_example/pages/home/home_page.dart';
+
+import 'package:flutter_nodejs_example/pages/login/login_page.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const LoginPage(),
     );
   }
 }
