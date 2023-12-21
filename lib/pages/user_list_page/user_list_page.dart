@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nodejs_example/api/controller/user_controller.dart';
+import 'package:flutter_nodejs_example/pages/user_update/user_update.dart';
 import 'package:get/get.dart';
 
 class UserListPage extends StatefulWidget {
@@ -68,6 +69,26 @@ class _UserListPageState extends State<UserListPage> {
                               return ListTile(
                                 title: Text(user.userName ?? 'Boş'),
                                 subtitle: Text(user.phoneNumber ?? 'Boş'),
+                                leading: CircleAvatar(
+                                  backgroundColor: Colors.deepPurple,
+                                  child: Text(
+                                    user.userName!.substring(0, 1).toUpperCase(),
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                trailing: IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () async {
+                                    // await userController!.deleteUser(user.userID!);
+                                    // final searchText = searchTextController.text;
+                                    // userController!.getUserList(searchText);
+                                  },
+                                ),
+                                onTap: () async {
+                                  userController!.userModel.value = user;
+                                  Get.to(() => const UserUpdatePage());
+                                },
+
                                 // Diğer kullanıcı bilgileri eklenebilir
                               );
                             },

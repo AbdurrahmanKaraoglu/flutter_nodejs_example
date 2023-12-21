@@ -15,6 +15,7 @@ class UserController extends GetxController {
   }
 
   RxList<UserModel> userList = RxList<UserModel>();
+  Rx<UserModel> userModel = UserModel().obs;
 
   RxString userName = ''.obs;
 
