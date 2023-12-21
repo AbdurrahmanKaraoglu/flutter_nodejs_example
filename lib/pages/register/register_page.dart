@@ -132,7 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 // Kaydet butonu
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // Form verilerini kontrol et
                     FormState? formState = formKey.currentState;
                     if (formState != null && !formState.validate()) {
@@ -149,8 +149,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       isPassive: false,
                       recordUser: recordUserController.text,
                     );
-                    userController!.addOrUpdateUser(userData).then((resP) {
+                    await userController!.addOrUpdateUser(userData).then((resP) {
                       if (resP) {
+                        // Sayfayı kapat
+                        Get.back();
                         // Kayıt başarılı mesajı göster
                         Get.snackbar(
                           'Kayıt Başarılı',
@@ -169,9 +171,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         );
                       }
                     });
-
-                    // Sayfayı kapat
-                    Get.back();
                   },
                   child: const Text('Kaydet'),
                 ),

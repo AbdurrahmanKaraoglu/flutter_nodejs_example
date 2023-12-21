@@ -1,10 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_nodejs_example/api/controller/user_controller.dart';
 
 import 'package:flutter_nodejs_example/pages/login/login_page.dart';
 import 'package:get/get.dart';
 
+import 'package:encrypt/encrypt.dart' as enc;
+
 void main() {
+  // final ivEncrypter = enc.IV.fromUtf8("1234567890abcdef");
+  // final ivBase64 = base64Encode(ivEncrypter.bytes);
+
+  enc.IV ivEncrypter = enc.IV.fromLength(32); // Her şifreleme için yeni bir IV üretin
+  String ivBase64 = base64Encode(ivEncrypter.bytes);
+  print('IV from Flutter: $ivBase64');
   runApp(const MyApp());
 }
 

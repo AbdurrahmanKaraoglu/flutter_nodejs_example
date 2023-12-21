@@ -22,6 +22,7 @@ class _UserListPageState extends State<UserListPage> {
 
   Future<void> dataLoad() async {
     await userController!.getUserList('');
+    await userController!.getUserListFromOtherApp('');
   }
 
   @override
@@ -43,6 +44,7 @@ class _UserListPageState extends State<UserListPage> {
                   onPressed: () {
                     final searchText = searchTextController.text;
                     userController!.getUserList(searchText);
+                    userController!.getUserListFromOtherApp(searchText);
                   },
                 ),
               ),

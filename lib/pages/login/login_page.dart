@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // Giriş butonu
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // Form verilerini kontrol et
                     FormState? formState = formKey.currentState;
                     if (formState != null && !formState.validate()) {
@@ -86,12 +86,33 @@ class _LoginPageState extends State<LoginPage> {
 
                     userController!.userName.value = "Abddurrahman";
 
-                    // Kullanıcıyı kaydet
+                    // Kullanıcıyı Giriş Yapma
+
+                    await userController!.loginUser(phoneNumberController.text, userPasswordController.text).then((value) {
+                      if (value.userID! > 0) {
+                        Get.offAll(() => const HomePage());
+                        Get.snackbar(
+                          'Giriş Başarılı',
+                          'Giriş başarılı.',
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.green,
+                          colorText: Colors.white,
+                        );
+                      } else {
+                        Get.snackbar(
+                          'Giriş Başarısız',
+                          'Giriş başarısız.',
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.red,
+                          colorText: Colors.white,
+                        );
+                      }
+                    });
 
                     // userController!.addOrUpdateUser(userData).then((resP) {
                     //   if (resP) {
                     //     // Giriş başarılı mesajı göster
-                    Get.offAll(() => const HomePage());
+                    // Get.offAll(() => const HomePage());
                     //     Get.snackbar(
                     //       'Kayıt Başarılı',
                     //       'Kayıt başarılı.',
