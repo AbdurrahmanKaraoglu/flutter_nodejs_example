@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
     userController = Get.find<UserController>(tag: "Main");
 
     debugPrint('serController!.userName.value : ${userController!.userName.value}');
+
     super.initState();
   }
 

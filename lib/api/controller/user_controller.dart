@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_nodejs_example/api/model/user_model.dart';
+import 'package:flutter_nodejs_example/api/services/base_client.dart';
 import 'package:flutter_nodejs_example/encrypt/ex_crypted.dart';
 import 'package:get/get.dart';
 
@@ -19,30 +20,31 @@ class UserController extends GetxController {
 
   RxString userName = ''.obs;
 
-  // Future<void> getUserList(String searchText) async {
-  //   try {
-  //     setLoading(true);
-  //     userList.clear();
-  //     final response = await http.get(
-  //       Uri.parse('https://app-sence-sql-b5f497e5247d.herokuapp.com/users/listUsers?searchText=$searchText'),
-  //     );
+  Future<void> getSysModulList() async {
+    try {
+      setLoading(true);
 
-  //     if (response.statusCode == 200) {
-  //       userList.value = userModelFromJson(response.body);
-  //     } else {
-  //       userList.clear();
-  //       // Handle error
-  //       debugPrint('HTTP isteği başarısız: ${response.statusCode}');
-  //     }
+      final response = await http.get(
+        Uri.parse('https://portakil-master-db-09fe3ef6ad55.herokuapp.com/system/sysModulSubList?upModulID=1'),
+        // headers: <String, String>{
+        //   'Content-Type': 'application/json; charset=UTF-8',
+        //   'Access-Control-Allow-Origin': '*',
+        // },
+      );
 
-  //     userList.refresh();
+      if (response.statusCode == 200) {
+        debugPrint('response.body: ${response.body}');
+      } else {
+        // Handle error
+        debugPrint('HTTP isteği başarısız: ${response.statusCode}');
+      }
 
-  //     setLoading(false);
-  //   } on Exception catch (e) {
-  //     debugPrint('Hata: $e');
-  //     setLoading(false);
-  //   }
-  // }
+      setLoading(false);
+    } on Exception catch (e) {
+      debugPrint('Hata: $e');
+      setLoading(false);
+    }
+  }
 
   Rx<SessionUserModel> sessionUser = SessionUserModel().obs;
 
@@ -228,4 +230,126 @@ class UserController extends GetxController {
       debugPrint('Hata: $error');
     }
   }
+
+  Future<bool> sysModulAdd(UserModel userData) async {
+    try {
+      RespMessage respMessage = RespMessage();
+      String apiUrl = "https://portakil-master-db-09fe3ef6ad55.herokuapp.com/system/sysModulAdd"; // API URL'sini ve endpoint'i buraya ekleyin
+
+      Map<String, dynamic> params = {
+        "modulID": userData.userID,
+        "modulName": userData.userName,
+      };
+
+      var response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(params),
+      );
+
+      if (response.statusCode == 200) {
+        // Başarılı bir şekilde cevap alındı
+        respMessage = RespMessage.fromJson(json.decode(response.body));
+
+        return true;
+      } else {
+        // Başarısız bir HTTP isteği durumunda buraya düşer
+        debugPrint("HTTP isteği başarısız: ${response.statusCode}");
+        return false;
+      }
+    } catch (e) {
+      // Hata durumunda buraya düşer
+      debugPrint("Hata: $e");
+      return false;
+    }
+  }
+
+//---------------------------------------------------------------------------------------
+  Future<RespMessage> sysModulAddV2(UserModel userData) async {
+    RespMessage respMessage = RespMessage();
+    try {
+      Map<String, dynamic> params = {
+        "modulID": userData.userID,
+        "modulName": userData.userName,
+      };
+
+      var response = await BaseClient.post('/system/sysModulAdd', params);
+
+      if (response.statusCode == 200) {
+        respMessage = RespMessage.fromJson(json.decode(response.body));
+
+        return respMessage;
+      } else {
+        return respMessage;
+      }
+    } on Exception catch (e) {
+      debugPrint("Hata sendPayment $e");
+      return respMessage;
+    }
+  }
+
+  Future<void> getSysModulSubListV2() async {
+    try {
+      setLoading(true);
+
+      Map<String, dynamic> queryParameters = {
+        'upModulID': "1",
+        //  'param2': "param2",
+        // 'param3': "param3",
+      };
+
+      // https://portakil-master-db-09fe3ef6ad55.herokuapp.com/system/sysModulList
+
+      var response = await BaseClient.get('/system/sysModulSubList', queryParameters);
+
+      if (response.statusCode == 200) {
+        userList.value = userModelFromJson(response.body);
+      } else {
+        userList.clear();
+        // Handle error
+        debugPrint('HTTP isteği başarısız: ${response.statusCode}');
+      }
+
+      userList.refresh();
+
+      setLoading(false);
+    } on Exception catch (e) {
+      debugPrint('Hata: $e');
+      setLoading(false);
+    }
+  }
+
+  Future<void> getSysModulListV2() async {
+    try {
+      setLoading(true);
+
+      Map<String, dynamic> queryParameters = {
+        // 'upModulID': "1",
+        //  'param2': "param2",
+        // 'param3': "param3",
+      };
+
+      // https://portakil-master-db-09fe3ef6ad55.herokuapp.com/system/sysModulList
+
+      var response = await BaseClient.get('/system/sysModulList', queryParameters);
+
+      if (response.statusCode == 200) {
+        userList.value = userModelFromJson(response.body);
+      } else {
+        userList.clear();
+        // Handle error
+        debugPrint('HTTP isteği başarısız: ${response.statusCode}');
+      }
+
+      userList.refresh();
+
+      setLoading(false);
+    } on Exception catch (e) {
+      debugPrint('Hata: $e');
+      setLoading(false);
+    }
+  }
+  //---------------------------------------------------------------------------------------
 }

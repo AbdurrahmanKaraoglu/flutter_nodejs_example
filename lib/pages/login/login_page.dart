@@ -78,58 +78,60 @@ class _LoginPageState extends State<LoginPage> {
                 // Giriş butonu
                 ElevatedButton(
                   onPressed: () async {
-                    // Form verilerini kontrol et
-                    FormState? formState = formKey.currentState;
-                    if (formState != null && !formState.validate()) {
-                      return;
-                    }
+                    // userController!.getSysModulList();
+                    userController!.getSysModulListV2();
+                    // // Form verilerini kontrol et
+                    // FormState? formState = formKey.currentState;
+                    // if (formState != null && !formState.validate()) {
+                    //   return;
+                    // }
 
-                    userController!.userName.value = "Abddurrahman";
+                    // userController!.userName.value = "Abddurrahman";
 
-                    // Kullanıcıyı Giriş Yapma
+                    // // Kullanıcıyı Giriş Yapma
 
-                    await userController!.loginUser(phoneNumberController.text, userPasswordController.text).then((value) {
-                      if (value.userID! > 0) {
-                        Get.offAll(() => const HomePage());
-                        Get.snackbar(
-                          'Giriş Başarılı',
-                          'Giriş başarılı.',
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.green,
-                          colorText: Colors.white,
-                        );
-                      } else {
-                        Get.snackbar(
-                          'Giriş Başarısız',
-                          'Giriş başarısız.',
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.red,
-                          colorText: Colors.white,
-                        );
-                      }
-                    });
-
-                    // userController!.addOrUpdateUser(userData).then((resP) {
-                    //   if (resP) {
-                    //     // Giriş başarılı mesajı göster
-                    // Get.offAll(() => const HomePage());
+                    // await userController!.loginUser(phoneNumberController.text, userPasswordController.text).then((value) {
+                    //   if (value.userID! > 0) {
+                    //     Get.offAll(() => const HomePage());
                     //     Get.snackbar(
-                    //       'Kayıt Başarılı',
-                    //       'Kayıt başarılı.',
+                    //       'Giriş Başarılı',
+                    //       'Giriş başarılı.',
                     //       snackPosition: SnackPosition.BOTTOM,
                     //       backgroundColor: Colors.green,
                     //       colorText: Colors.white,
                     //     );
                     //   } else {
                     //     Get.snackbar(
-                    //       'Kayıt Başarısız',
-                    //       'Kayıt başarısız.',
+                    //       'Giriş Başarısız',
+                    //       'Giriş başarısız.',
                     //       snackPosition: SnackPosition.BOTTOM,
                     //       backgroundColor: Colors.red,
                     //       colorText: Colors.white,
                     //     );
                     //   }
                     // });
+
+                    // // userController!.addOrUpdateUser(userData).then((resP) {
+                    // //   if (resP) {
+                    // //     // Giriş başarılı mesajı göster
+                    // // Get.offAll(() => const HomePage());
+                    // //     Get.snackbar(
+                    // //       'Kayıt Başarılı',
+                    // //       'Kayıt başarılı.',
+                    // //       snackPosition: SnackPosition.BOTTOM,
+                    // //       backgroundColor: Colors.green,
+                    // //       colorText: Colors.white,
+                    // //     );
+                    // //   } else {
+                    // //     Get.snackbar(
+                    // //       'Kayıt Başarısız',
+                    // //       'Kayıt başarısız.',
+                    // //       snackPosition: SnackPosition.BOTTOM,
+                    // //       backgroundColor: Colors.red,
+                    // //       colorText: Colors.white,
+                    // //     );
+                    // //   }
+                    // // });
                   },
                   child: const Text('Giriş'),
                 ),
