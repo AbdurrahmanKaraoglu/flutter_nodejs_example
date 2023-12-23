@@ -414,4 +414,78 @@ class UserController extends GetxController {
   }
 
   //---------------------------------------------------------------------------------------
+
+  Future<void> getSysModulListFromOtherApp() async {
+    try {
+      // Diğer Node.js uygulamasının URL'sini buraya ekleyin
+      String otherAppUrl = 'https://portakil-master-4765506d3d01.herokuapp.com';
+
+      final response = await http.get(
+        Uri.parse('$otherAppUrl/system/sysModulList'),
+      );
+
+      if (response.statusCode == 200) {
+        // Başarılı ise JSON verisini parse et ve kullanıcı listesini döndür
+        debugPrint('response.body: ${response.body}');
+      } else {
+        // Başarısız ise hata mesajını yazdır
+        debugPrint('HTTP isteği başarısız getUserListFromOtherApp: ${response.statusCode}');
+      }
+    } catch (error) {
+      // Hata durumunda hata mesajını yazdır
+      debugPrint('Hata: $error');
+    }
+  }
+
+  Future<void> getSysModulSubListFromOtherApp(int upModulID) async {
+    try {
+      // Diğer Node.js uygulamasının URL'sini buraya ekleyin
+      String otherAppUrl = 'https://portakil-master-4765506d3d01.herokuapp.com';
+
+      Map<String, dynamic> queryParameters = {
+        'upModulID': "1",
+        //  'param2': "param2",
+        // 'param3': "param3",
+      };
+
+      final response = await http.get(Uri.parse('$otherAppUrl/system/sysModulSubList').replace(queryParameters: queryParameters));
+
+      if (response.statusCode == 200) {
+        // Başarılı ise JSON verisini parse et ve kullanıcı listesini döndür
+        debugPrint('response.body: ${response.body}');
+      } else {
+        // Başarısız ise hata mesajını yazdır
+        debugPrint('HTTP isteği başarısız getUserListFromOtherApp: ${response.statusCode}');
+      }
+    } catch (error) {
+      // Hata durumunda hata mesajını yazdır
+      debugPrint('Hata: $error');
+    }
+  }
+
+  Future<void> getSysModulSubListFromOtherAppV2(int upModulID) async {
+    try {
+      // Diğer Node.js uygulamasının URL'sini buraya ekleyin
+      String otherAppUrl = 'https://portakil-master-4765506d3d01.herokuapp.com';
+
+      Map<String, dynamic> queryParameters = {
+        'upModulID': "1",
+        //  'param2': "param2",
+        // 'param3': "param3",
+      };
+
+      final response = await http.get(Uri.parse('$otherAppUrl/system/sysModulSubListV2').replace(queryParameters: queryParameters));
+
+      if (response.statusCode == 200) {
+        // Başarılı ise JSON verisini parse et ve kullanıcı listesini döndür
+        debugPrint('response.body: ${response.body}');
+      } else {
+        // Başarısız ise hata mesajını yazdır
+        debugPrint('HTTP isteği başarısız getUserListFromOtherApp: ${response.statusCode}');
+      }
+    } catch (error) {
+      // Hata durumunda hata mesajını yazdır
+      debugPrint('Hata: $error');
+    }
+  }
 }
