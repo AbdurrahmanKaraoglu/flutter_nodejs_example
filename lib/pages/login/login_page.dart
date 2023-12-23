@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                 ElevatedButton(
                   onPressed: () async {
                     // userController!.getSysModulList();
-                    userController!.getSysModulListV2();
+                    await userController!.sysModulDeleteV2(11);
                     // // Form verilerini kontrol et
                     // FormState? formState = formKey.currentState;
                     // if (formState != null && !formState.validate()) {

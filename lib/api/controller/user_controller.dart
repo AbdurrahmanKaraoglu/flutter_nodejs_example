@@ -266,6 +266,40 @@ class UserController extends GetxController {
     }
   }
 
+  Future<bool> sysModulDelete(int modulID) async {
+    try {
+      RespMessage respMessage = RespMessage();
+      String apiUrl = "https://portakil-master-db-09fe3ef6ad55.herokuapp.com/system/sysModulDelete"; // API URL'sini ve endpoint'i buraya ekleyin
+
+      Map<String, dynamic> params = {
+        "modulID": modulID,
+      };
+
+      var response = await http.delete(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(params),
+      );
+
+      if (response.statusCode == 200) {
+        // Başarılı bir şekilde cevap alındı
+        respMessage = RespMessage.fromJson(json.decode(response.body));
+
+        return true;
+      } else {
+        // Başarısız bir HTTP isteği durumunda buraya düşer
+        debugPrint("HTTP isteği başarısız: ${response.statusCode}");
+        return false;
+      }
+    } catch (e) {
+      // Hata durumunda buraya düşer
+      debugPrint("Hata: $e");
+      return false;
+    }
+  }
+
 //---------------------------------------------------------------------------------------
   Future<RespMessage> sysModulAddV2(UserModel userData) async {
     RespMessage respMessage = RespMessage();
@@ -351,5 +385,33 @@ class UserController extends GetxController {
       setLoading(false);
     }
   }
+
+  Future<bool> sysModulDeleteV2(int modulID) async {
+    try {
+      RespMessage respMessage = RespMessage();
+
+      Map<String, dynamic> params = {
+        "modulID": modulID,
+      };
+
+      var response = await BaseClient.delete('/system/sysModulDelete', params);
+
+      if (response.statusCode == 200) {
+        // Başarılı bir şekilde cevap alındı
+        respMessage = RespMessage.fromJson(json.decode(response.body));
+
+        return true;
+      } else {
+        // Başarısız bir HTTP isteği durumunda buraya düşer
+        debugPrint("HTTP isteği başarısız: ${response.statusCode}");
+        return false;
+      }
+    } catch (e) {
+      // Hata durumunda buraya düşer
+      debugPrint("Hata sysModulDeleteV2: $e");
+      return false;
+    }
+  }
+
   //---------------------------------------------------------------------------------------
 }

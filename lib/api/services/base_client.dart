@@ -79,4 +79,41 @@ class BaseClient {
       throw ApiNotRespondingException('API not responded in time', uri.toString());
     }
   }
+
+  // DELETE
+
+  static Future<http.Response> delete(String api, Map<String, dynamic>? queryParameters) async {
+    http.Response? resp;
+    Uri uri = Uri.parse(baseUrl + api);
+
+    try {
+      Map<String, String> header = {"Content-type": "application/json"};
+      Object body = json.encode(queryParameters);
+
+      var response = await http.delete(uri, headers: header, body: body).timeout(Duration(seconds: timeOutDuration!));
+
+      return response;
+    } catch (e) {
+      return resp!;
+    }
+  }
+
+  static Future<http.Response> deleteToken(String api, String jwtToken, String userID, Map<String, dynamic>? queryParameters) async {
+    Uri uri = Uri.parse(baseUrl + api);
+    try {
+      Map<String, String> header = {
+        'Content-Type': 'application/json',
+        'Authorization': jwtToken,
+        'UserID': userID, // Kullanıcı kimliği buraya eklenecek
+      };
+      Object body = json.encode(queryParameters);
+
+      var response = await http.delete(uri, headers: header, body: body).timeout(Duration(seconds: timeOutDuration!));
+      return response;
+    } on SocketException {
+      throw FetchDataException('No Internet connection', uri.toString());
+    } on TimeoutException {
+      throw ApiNotRespondingException('API not responded in time', uri.toString());
+    }
+  }
 }
